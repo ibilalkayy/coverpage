@@ -1,515 +1,1747 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Cover - Intelligent Data Reactor</title>
+        <title>Cover</title>
         <link rel="icon" type="image/png" href="logo.png" />
-
         <script src="https://cdn.tailwindcss.com"></script>
-
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
             rel="stylesheet"
         />
-
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            serif: ["Instrument Serif", "serif"],
+                            sans: ["DM Sans", "sans-serif"],
+                        },
+                        colors: {
+                            ink: "#0f0f0e",
+                            paper: "#f5f3ee",
+                            sage: "#2d4a3e",
+                            "sage-light": "#e8f0ec",
+                            "sage-mid": "#4a7c65",
+                            amber: "#c4702a",
+                            "amber-light": "#fdf3e7",
+                            muted: "#6b6860",
+                            border: "#e0ddd5",
+                        },
+                    },
+                },
+            };
+        </script>
         <style>
             * {
-                font-family:
-                    "Inter",
-                    system-ui,
-                    -apple-system,
-                    sans-serif;
+                box-sizing: border-box;
             }
-
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6 {
-                font-family:
-                    "Outfit",
-                    system-ui,
-                    -apple-system,
-                    sans-serif;
-                font-weight: 600;
-            }
-
-            :root {
-                --warm-bg: #fdfbf7;
-                --warm-text: #2d2520;
-                --warm-accent: #d97706;
-                --warm-light: #f9f7f3;
-                --warm-border: #e8e6e1;
-            }
-
             body {
-                background-color: var(--warm-bg);
-                color: var(--warm-text);
+                background: #f5f3ee;
+                color: #0f0f0e;
+                font-family: "DM Sans", sans-serif;
+            }
+            .serif {
+                font-family: "Instrument Serif", serif;
+            }
+            .serif-italic {
+                font-family: "Instrument Serif", serif;
+                font-style: italic;
             }
 
-            button,
-            a,
-            input {
-                transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            /* nav blur */
+            .nav-blur {
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
             }
 
-            .btn-primary {
-                background-color: var(--warm-accent);
-                color: white;
-                padding: 0.75rem 1.5rem;
-                border-radius: 0.75rem;
-                font-weight: 600;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                cursor: pointer;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            }
-
-            .btn-primary:hover {
-                background-color: #c86d00;
-                transform: translateY(-2px);
-                box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15);
-            }
-
-            .btn-secondary {
-                background-color: transparent;
-                color: var(--warm-text);
-                border: 1px solid var(--warm-border);
-                padding: 0.75rem 1.5rem;
-                border-radius: 0.75rem;
-                font-weight: 600;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                cursor: pointer;
-            }
-
-            .btn-secondary:hover {
-                background-color: var(--warm-light);
-                border-color: var(--warm-accent);
-                color: var(--warm-accent);
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-            }
-
-            .hero-section {
-                background:
-                    linear-gradient(
-                        135deg,
-                        rgba(253, 251, 247, 0.92) 0%,
-                        rgba(253, 251, 247, 0.72) 100%
-                    ),
-                    url("https://d2xsxph8kpxj0f.cloudfront.net/310519663457600328/3Au7MTikMaERbG2crnVdZB/cover-hero-bg-2kax4pTD78mfgGkK49oEvk.webp");
-                background-size: cover;
-                background-position: center;
-                background-attachment: fixed;
-            }
-
-            .feature-circle {
-                width: 1.5rem;
-                height: 1.5rem;
-                border-radius: 50%;
-                background-color: rgba(217, 119, 6, 0.1);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-                margin-top: 0.25rem;
-            }
-
-            .feature-circle::after {
+            /* grain overlay */
+            .grain::after {
                 content: "";
-                width: 0.5rem;
-                height: 0.5rem;
-                border-radius: 50%;
-                background-color: var(--warm-accent);
+                position: absolute;
+                inset: 0;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+                pointer-events: none;
+                z-index: 0;
             }
 
-            nav {
-                background-color: rgba(253, 251, 247, 0.8);
-                backdrop-filter: blur(4px);
-                border-bottom: 1px solid var(--warm-border);
+            /* process line */
+            .process-line {
+                position: absolute;
+                left: 19px;
+                top: 40px;
+                bottom: 0;
+                width: 1px;
+                background: linear-gradient(to bottom, #2d4a3e, transparent);
             }
 
-            @media (prefers-reduced-motion: reduce) {
-                *,
-                *::before,
-                *::after {
-                    animation-duration: 0.01ms !important;
-                    animation-iteration-count: 1 !important;
-                    transition-duration: 0.01ms !important;
-                    scroll-behavior: auto !important;
+            /* card hover lift — pure CSS */
+            .card-lift {
+                transition:
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+            }
+            .card-lift:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            }
+
+            /* pulsing dot — pure CSS animation */
+            @keyframes pulseDot {
+                0%,
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.4);
+                    opacity: 0.6;
+                }
+            }
+            .risk-pulse {
+                animation: pulseDot 2s ease-in-out infinite;
+            }
+
+            /* whatsapp button pulse */
+            @keyframes wa-pulse {
+                0%,
+                100% {
+                    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+                }
+                50% {
+                    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+                }
+            }
+            .wa-btn {
+                animation: wa-pulse 2.5s ease-in-out infinite;
+            }
+
+            /* competitor strikethrough on hover */
+            .strike {
+                position: relative;
+            }
+            .strike::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 0;
+                height: 1.5px;
+                background: #c4702a;
+                transition: width 0.4s ease 0.2s;
+            }
+            .strike:hover::after {
+                width: 100%;
+            }
+
+            /* section separator */
+            .sep {
+                border: none;
+                border-top: 1px solid #e0ddd5;
+                margin: 0;
+            }
+
+            /* =============================================
+   SCROLL REVEAL — pure CSS using @keyframes
+   + animation-play-state trick via animation-delay
+   We use animation-timeline:view() where supported,
+   with a graceful fallback that just shows content.
+   ============================================= */
+            @keyframes revealUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Default: visible (no-JS, old browsers) */
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+
+            /* Modern browsers that support animation-timeline */
+            @supports (animation-timeline: view()) {
+                .reveal {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    animation: revealUp 0.6s ease forwards;
+                    animation-timeline: view();
+                    animation-range: entry 0% entry 25%;
+                }
+                .reveal-d1 {
+                    animation-delay: 0.05s;
+                }
+                .reveal-d2 {
+                    animation-delay: 0.1s;
+                }
+                .reveal-d3 {
+                    animation-delay: 0.15s;
+                }
+                .reveal-d4 {
+                    animation-delay: 0.2s;
+                }
+                .reveal-d5 {
+                    animation-delay: 0.3s;
+                }
+            }
+
+            /* Hero elements animate on page load (not scroll) */
+            .hero-reveal {
+                opacity: 0;
+                animation: revealUp 0.7s ease forwards;
+            }
+            .hero-reveal-d1 {
+                animation-delay: 0.1s;
+            }
+            .hero-reveal-d2 {
+                animation-delay: 0.2s;
+            }
+            .hero-reveal-d3 {
+                animation-delay: 0.3s;
+            }
+            .hero-reveal-d4 {
+                animation-delay: 0.45s;
+            }
+
+            /* =============================================
+   FAQ ACCORDION — pure HTML details/summary
+   No JavaScript at all.
+   ============================================= */
+            details.faq-item {
+                background: #fff;
+                border: 0.5px solid #e0ddd5;
+                border-radius: 1rem;
+                overflow: hidden;
+            }
+            details.faq-item summary {
+                list-style: none;
+                padding: 1rem 1.25rem;
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 1rem;
+                cursor: pointer;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #0f0f0e;
+                line-height: 1.4;
+                user-select: none;
+            }
+            details.faq-item summary::-webkit-details-marker {
+                display: none;
+            }
+            details.faq-item summary::after {
+                content: "+";
+                font-size: 1.2rem;
+                color: #6b6860;
+                flex-shrink: 0;
+                margin-top: -0.1rem;
+                transition: transform 0.2s ease;
+                line-height: 1;
+            }
+            details.faq-item[open] summary::after {
+                content: "×";
+                transform: rotate(90deg);
+            }
+            .faq-body {
+                padding: 0 1.25rem 1rem;
+                font-size: 0.875rem;
+                color: #6b6860;
+                line-height: 1.7;
+            }
+
+            /* smooth details open/close — CSS only */
+            details.faq-item .faq-body {
+                animation: fadeDown 0.2s ease;
+            }
+            @keyframes fadeDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-6px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
             }
         </style>
     </head>
-
-    <body class="bg-white">
-        <!-- Navigation -->
-        <nav class="sticky top-0 z-50">
+    <body class="antialiased">
+        <!-- NAV -->
+        <nav
+            class="fixed top-0 left-0 right-0 z-50 nav-blur bg-paper/80 border-b border-border"
+        >
             <div
-                class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between"
+                class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between"
             >
-                <div class="flex items-center gap-2">
-                    <img
-                        src="logo.png"
-                        alt="Cover Logo"
-                        class="w-7 h-7 object-contain rounded-lg"
-                    />
-                    <span class="font-semibold text-lg">Cover</span>
+                <div class="flex items-center gap-2.5">
+                    <div
+                        class="w-7 h-7 bg-sage rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
+                    >
+                        <img
+                            src="logo.png"
+                            alt="icon"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+
+                    <span class="font-medium text-ink text-sm tracking-tight">
+                        Cover
+                    </span>
+
+                    <span
+                        class="text-xs text-muted border border-border rounded-full px-2 py-0.5 hidden sm:inline"
+                    >
+                        beta
+                    </span>
+                </div>
+                <div
+                    class="hidden md:flex items-center gap-7 text-sm text-muted"
+                >
+                    <a href="#how" class="hover:text-ink transition-colors"
+                        >How it works</a
+                    >
+                    <a href="#features" class="hover:text-ink transition-colors"
+                        >Features</a
+                    >
+                    <a
+                        href="#competitors"
+                        class="hover:text-ink transition-colors"
+                        >Why Cover</a
+                    >
+                    <a href="#pricing" class="hover:text-ink transition-colors"
+                        >Pricing</a
+                    >
+                    <a href="#faq" class="hover:text-ink transition-colors"
+                        >FAQ</a
+                    >
                 </div>
                 <a
-                    href="https://github.com/ibilalkayy/cover"
+                    href="https://chat.whatsapp.com/FyVV2yoKzwP6uDaTht5zoh"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-gray-600 hover:text-orange-600 transition-colors"
+                    class="bg-black text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-sage-mid transition-colors flex items-center gap-2"
                 >
                     <svg
-                        class="w-5 h-5"
-                        fill="currentColor"
+                        width="14"
+                        height="14"
                         viewBox="0 0 24 24"
+                        fill="currentColor"
                     >
                         <path
-                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                        />
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.847L.057 23.882l6.198-1.456A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.68.865.928-3.585-.234-.37A9.818 9.818 0 012.182 12c0-5.423 4.395-9.818 9.818-9.818S21.818 6.577 21.818 12 17.423 21.818 12 21.818z"
                         />
                     </svg>
+                    Join beta
                 </a>
             </div>
         </nav>
 
-        <!-- Hero Section -->
+        <!-- HERO -->
         <section
-            class="hero-section relative overflow-hidden pt-20 pb-32 md:pt-32 md:pb-48"
+            class="relative min-h-screen flex flex-col justify-center pt-14 overflow-hidden grain"
         >
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div
+                class="absolute top-0 right-0 w-96 h-96 bg-sage-light rounded-full -translate-y-1/2 translate-x-1/3 opacity-60 blur-3xl"
+            ></div>
+            <div
+                class="absolute bottom-0 left-0 w-72 h-72 bg-amber-light rounded-full translate-y-1/3 -translate-x-1/4 opacity-80 blur-2xl"
+            ></div>
+
+            <div class="max-w-6xl mx-auto px-6 py-24 relative z-10">
                 <div class="max-w-3xl">
+                    <div
+                        class="inline-flex items-center gap-2 bg-sage-light text-sage rounded-full px-3.5 py-1.5 text-xs font-medium mb-8 hero-reveal"
+                    >
+                        <span
+                            class="w-1.5 h-1.5 rounded-full bg-sage-mid risk-pulse inline-block"
+                        ></span>
+                        Built for WhatsApp sellers &amp; buyers — join the beta
+                    </div>
+
                     <h1
-                        class="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+                        class="serif text-5xl sm:text-6xl md:text-7xl text-ink leading-[1.08] mb-6 hero-reveal hero-reveal-d1"
                     >
-                        Cover
+                        Pay safe.<br />
+                        <span class="serif-italic text-sage">Every single</span
+                        ><br />
+                        time.
                     </h1>
+
                     <p
-                        class="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed font-light"
+                        class="text-lg text-muted leading-relaxed max-w-xl mb-10 hero-reveal hero-reveal-d2"
                     >
-                        A system that reacts intelligently whenever data changes
+                        Cover holds your money safely until you get what you
+                        paid for. No more ghost sellers, fake products, or lost
+                        cash. Built for anyone who buys or sells on WhatsApp,
+                        Facebook, Instagram, or any marketplace.
                     </p>
-                    <p
-                        class="text-base md:text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl"
+
+                    <div
+                        class="flex flex-col sm:flex-row gap-3 hero-reveal hero-reveal-d3"
                     >
-                        Cover is a Rust-powered engine built around one core
-                        loop: watch, detect, decide, and act. It starts with
-                        continuous sync and recovery, but its scope extends much
-                        further into data protection, cyber resilience, AI data
-                        workflows, and intelligent data operations.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
                         <a
-                            href="https://github.com/ibilalkayy/cover"
+                            href="https://chat.whatsapp.com/FyVV2yoKzwP6uDaTht5zoh"
                             target="_blank"
-                            rel="noopener noreferrer"
-                            class="btn-secondary"
+                            class="wa-btn bg-[#25D366] text-white font-medium px-7 py-3.5 rounded-full flex items-center justify-center gap-2.5 hover:bg-[#20ba58] transition-colors text-sm"
                         >
                             <svg
-                                class="w-4 h-4"
-                                fill="currentColor"
+                                width="18"
+                                height="18"
                                 viewBox="0 0 24 24"
+                                fill="currentColor"
                             >
                                 <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                                />
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.847L.057 23.882l6.198-1.456A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.68.865.928-3.585-.234-.37A9.818 9.818 0 012.182 12c0-5.423 4.395-9.818 9.818-9.818S21.818 6.577 21.818 12 17.423 21.818 12 21.818z"
                                 />
                             </svg>
-                            View GitHub
+                            Join on WhatsApp
                         </a>
-                        <button class="btn-primary">
-                            Coming Soon
+                        <a
+                            href="#how"
+                            class="bg-ink text-paper font-medium px-7 py-3.5 rounded-full flex items-center justify-center gap-2 hover:bg-sage transition-colors text-sm"
+                        >
+                            See how it works
                             <svg
-                                class="w-4 h-4"
+                                width="14"
+                                height="14"
+                                viewBox="0 0 16 16"
                                 fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
                             >
                                 <path
+                                    d="M3 8h10M9 4l4 4-4 4"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                ></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- What is Cover -->
-        <section class="py-20 md:py-32 border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8">
-                        What is Cover?
-                    </h2>
-                    <p class="text-lg text-gray-600 leading-relaxed mb-6">
-                        Cover is not just a backup application. It is a
-                        continuous data reaction system that watches for change,
-                        understands what changed, decides what should happen
-                        next, and acts automatically.
-                    </p>
-                    <p class="text-lg text-gray-600 leading-relaxed">
-                        It begins with sync, protection, and recovery, but the
-                        same core process can be applied to broader areas like
-                        intelligent data movement, ransomware response, AI data
-                        preparation, and business data reliability.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works -->
-        <section class="py-20 md:py-32 border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold mb-16">
-                    The Core Process
-                </h2>
-                <div class="mb-16">
-                    <img
-                        src="https://d2xsxph8kpxj0f.cloudfront.net/310519663457600328/3Au7MTikMaERbG2crnVdZB/cover-how-it-works-visual-go2UynC4FevyLhUXstJjqB.webp"
-                        alt="How Cover Works"
-                        class="w-full max-w-3xl mx-auto rounded-lg"
-                    />
-                </div>
-                <div class="grid md:grid-cols-4 gap-8 max-w-5xl">
-                    <div class="text-center">
-                        <div
-                            class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wide"
-                        >
-                            Watch
-                        </div>
-                        <p class="text-gray-600">
-                            Continuously observe files, folders, or data systems
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wide"
-                        >
-                            Detect
-                        </div>
-                        <p class="text-gray-600">
-                            Identify what changed, appeared, disappeared, or
-                            became risky
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wide"
-                        >
-                            Decide
-                        </div>
-                        <p class="text-gray-600">
-                            Determine the right response based on rules and
-                            context
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="text-sm font-semibold text-orange-600 mb-3 uppercase tracking-wide"
-                        >
-                            Act
-                        </div>
-                        <p class="text-gray-600">
-                            Sync, protect, recover, verify, or route data
-                            automatically
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Planned Scope -->
-        <section class="py-20 md:py-32 border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12">
-                    Scope of Cover
-                </h2>
-                <div class="grid md:grid-cols-2 gap-8 max-w-4xl">
-                    <div class="flex items-start gap-4">
-                        <div class="feature-circle"></div>
-                        <p class="text-lg text-gray-600">
-                            Continuous sync, recovery, and data protection
-                        </p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="feature-circle"></div>
-                        <p class="text-lg text-gray-600">
-                            Cyber resilience and intelligent response to risky
-                            changes
-                        </p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="feature-circle"></div>
-                        <p class="text-lg text-gray-600">
-                            AI data workflows through automatic versioning and
-                            data movement
-                        </p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="feature-circle"></div>
-                        <p class="text-lg text-gray-600">
-                            Reliable data operations for teams, systems, and
-                            businesses
-                        </p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="feature-circle"></div>
-                        <p class="text-lg text-gray-600">
-                            Local, cloud, and future multi-environment data
-                            orchestration
-                        </p>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="feature-circle"></div>
-                        <p class="text-lg text-gray-600">
-                            A growing platform built around reacting
-                            intelligently to change
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Vision & Direction -->
-        <section class="py-20 md:py-32 border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8">
-                        Vision & Direction
-                    </h2>
-                    <p class="text-lg text-gray-600 leading-relaxed">
-                        Cover starts from a simple idea: data changes
-                        constantly, and software should respond intelligently
-                        instead of passively waiting for manual action. The
-                        long-term direction is to turn this core loop into a
-                        trusted platform for protection, resilience, recovery,
-                        and data operations across modern systems.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Current Status -->
-        <section class="py-20 md:py-32 border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8">
-                        Current Status
-                    </h2>
-                    <p class="text-lg text-gray-600 leading-relaxed mb-8">
-                        Cover is currently being built as a CLI tool in Rust.
-                        The present foundation focuses on continuous monitoring
-                        and reliable sync, while the broader system is being
-                        shaped into something much more ambitious.
-                    </p>
-                    <a
-                        href="https://github.com/ibilalkayy/cover"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn-primary"
-                    >
-                        <svg
-                            class="w-4 h-4"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                            />
-                        </svg>
-                        Explore on GitHub
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- About the Builder -->
-        <section class="py-20 md:py-32 border-b border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-8">
-                            About the Builder
-                        </h2>
-                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
-                            Cover is being built by a Rust backend developer
-                            focused on systems, CLI tools, and reliable
-                            software. The goal is not just to build another
-                            utility, but to create a technical product with a
-                            strong core, clear logic, and long-term scope.
-                        </p>
-                        <p class="text-lg text-gray-600 leading-relaxed">
-                            The project began from a personal need, but it is
-                            now being shaped into a broader system that can
-                            serve developers, teams, and modern data-driven
-                            workflows.
-                        </p>
-                    </div>
-                    <div>
-                        <img
-                            src="profile.jpg"
-                            alt="Builder workspace"
-                            class="w-full h-[360px] object-cover rounded-2xl"
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="py-12 md:py-16 bg-gray-50 border-t border-gray-200">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div
-                    class="flex flex-col md:flex-row items-center justify-between gap-8 mb-8"
-                >
-                    <div class="flex items-center gap-2">
-                        <img
-                            src="logo.png"
-                            alt="Cover Logo"
-                            class="w-7 h-7 object-contain rounded-lg"
-                        />
-                        <span class="font-semibold">Cover</span>
-                    </div>
-                    <div class="flex items-center gap-6">
-                        <a
-                            href="https://github.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-600 hover:text-orange-600 transition-colors flex items-center gap-2"
-                        >
-                            <svg
-                                class="w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
                                 />
                             </svg>
-                            GitHub
                         </a>
-                        <span class="text-gray-600">Coming soon</span>
+                    </div>
+
+                    <div
+                        class="mt-14 flex flex-wrap gap-8 hero-reveal hero-reveal-d4"
+                    >
+                        <div>
+                            <div class="text-2xl font-medium text-ink serif">
+                                £0
+                            </div>
+                            <div class="text-xs text-muted mt-0.5">
+                                lost by Cover users
+                            </div>
+                        </div>
+                        <div class="w-px bg-border self-stretch"></div>
+                        <div>
+                            <div class="text-2xl font-medium text-ink serif">
+                                90 sec
+                            </div>
+                            <div class="text-xs text-muted mt-0.5">
+                                to cancel an order
+                            </div>
+                        </div>
+                        <div class="w-px bg-border self-stretch"></div>
+                        <div>
+                            <div class="text-2xl font-medium text-ink serif">
+                                5 holds
+                            </div>
+                            <div class="text-xs text-muted mt-0.5">
+                                time · delivery · approval · milestone ·
+                                condition
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div
-                    class="pt-8 border-t border-gray-200 text-center text-sm text-gray-600"
-                >
-                    <p>
-                        © 2026 Cover. Built with Rust for intelligent data
-                        systems.
+            </div>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- HOW IT WORKS -->
+        <section id="how" class="py-24 max-w-6xl mx-auto px-6">
+            <div class="max-w-xl mb-16 reveal">
+                <p class="text-xs uppercase tracking-widest text-muted mb-3">
+                    How it works
+                </p>
+                <h2 class="serif text-4xl md:text-5xl text-ink leading-tight">
+                    From payment to protection in
+                    <span class="serif-italic text-sage">three steps</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-start">
+                <div class="space-y-0 relative">
+                    <div class="process-line"></div>
+
+                    <div class="relative pl-12 pb-10 reveal">
+                        <div
+                            class="absolute left-0 top-0 w-10 h-10 rounded-full bg-sage flex items-center justify-center flex-shrink-0 z-10"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                            >
+                                <path
+                                    d="M3 8h10M9 4l4 4-4 4"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-ink text-base mb-1.5 mt-2">
+                            Buyer pays Cover, not the seller
+                        </h3>
+                        <p class="text-sm text-muted leading-relaxed">
+                            Your money goes into Cover's protected hold — never
+                            touches the seller until you confirm everything is
+                            right. The seller gets a simple link to accept.
+                        </p>
+                    </div>
+
+                    <div class="relative pl-12 pb-10 reveal reveal-d1">
+                        <div
+                            class="absolute left-0 top-0 w-10 h-10 rounded-full bg-sage-light border border-sage flex items-center justify-center flex-shrink-0 z-10"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                            >
+                                <path
+                                    d="M2 8a6 6 0 1112 0A6 6 0 012 8z"
+                                    stroke="#2d4a3e"
+                                    stroke-width="1.3"
+                                />
+                                <path
+                                    d="M8 5.5V8l2 1.5"
+                                    stroke="#2d4a3e"
+                                    stroke-width="1.3"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-ink text-base mb-1.5 mt-2">
+                            Cover monitors the transaction
+                        </h3>
+                        <p class="text-sm text-muted leading-relaxed">
+                            We check the seller against our live scam database,
+                            verify tracking signals, and watch for fraud
+                            patterns — all in real time before and during
+                            delivery.
+                        </p>
+                    </div>
+
+                    <div class="relative pl-12 pb-10 reveal reveal-d2">
+                        <div
+                            class="absolute left-0 top-0 w-10 h-10 rounded-full bg-sage-light border border-sage flex items-center justify-center flex-shrink-0 z-10"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                            >
+                                <path
+                                    d="M4 8l2.5 2.5 5.5-5"
+                                    stroke="#2d4a3e"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-ink text-base mb-1.5 mt-2">
+                            Confirm delivery → seller gets paid
+                        </h3>
+                        <p class="text-sm text-muted leading-relaxed">
+                            Got your item and happy? One tap releases payment.
+                            Problem? Raise a dispute. Seller disappeared?
+                            Automatic refund. You are always protected.
+                        </p>
+                    </div>
+
+                    <div class="relative pl-12 reveal reveal-d3">
+                        <div
+                            class="absolute left-0 top-0 w-10 h-10 rounded-full bg-amber-light border border-amber flex items-center justify-center flex-shrink-0 z-10"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                            >
+                                <path
+                                    d="M8 2v4M8 10v4M2 8h4M10 8h4"
+                                    stroke="#c4702a"
+                                    stroke-width="1.4"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-ink text-base mb-1.5 mt-2">
+                            Dispute? Cover arbitrates fairly
+                        </h3>
+                        <p class="text-sm text-muted leading-relaxed">
+                            Both sides submit evidence. Cover's AI weighs trust
+                            scores, tracking data, and report history. Honest
+                            behaviour is rewarded — fraudsters can't win.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-3 reveal reveal-d2">
+                    <p
+                        class="text-xs uppercase tracking-widest text-muted mb-4"
+                    >
+                        5 types of protection
                     </p>
+
+                    <div
+                        class="card-lift bg-white border border-border rounded-2xl p-4"
+                    >
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5"
+                            >
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <circle
+                                        cx="8"
+                                        cy="8"
+                                        r="6"
+                                        stroke="#3b82f6"
+                                        stroke-width="1.3"
+                                    />
+                                    <path
+                                        d="M8 5v3l2 1.5"
+                                        stroke="#3b82f6"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div>
+                                <div
+                                    class="text-sm font-medium text-ink mb-0.5"
+                                >
+                                    Time window
+                                </div>
+                                <div class="text-xs text-muted">
+                                    90 seconds to cancel a food order. 48 hours
+                                    to reconsider a non-refundable booking. You
+                                    set the window.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white border border-border rounded-2xl p-4"
+                    >
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-sage-light flex items-center justify-center flex-shrink-0 mt-0.5"
+                            >
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M3 8l2.5 2.5L13 3"
+                                        stroke="#2d4a3e"
+                                        stroke-width="1.4"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div>
+                                <div
+                                    class="text-sm font-medium text-ink mb-0.5"
+                                >
+                                    Delivery gate
+                                </div>
+                                <div class="text-xs text-muted">
+                                    Payment releases only when the courier
+                                    confirms delivery — not when the seller says
+                                    it's sent. Verified by tracking API.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white border border-border rounded-2xl p-4"
+                    >
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center flex-shrink-0 mt-0.5"
+                            >
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M8 2l2 4h4l-3 2.5 1 4L8 10l-4 2.5 1-4L2 6h4z"
+                                        stroke="#7c3aed"
+                                        stroke-width="1.3"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div>
+                                <div
+                                    class="text-sm font-medium text-ink mb-0.5"
+                                >
+                                    Approval gate
+                                </div>
+                                <div class="text-xs text-muted">
+                                    Any purchase above a set limit requires a
+                                    second person to approve before money moves.
+                                    Ideal for teams and families.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white border border-border rounded-2xl p-4"
+                    >
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-amber-light flex items-center justify-center flex-shrink-0 mt-0.5"
+                            >
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M2 12l4-4 3 3 5-7"
+                                        stroke="#c4702a"
+                                        stroke-width="1.4"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div>
+                                <div
+                                    class="text-sm font-medium text-ink mb-0.5"
+                                >
+                                    Milestone gate
+                                </div>
+                                <div class="text-xs text-muted">
+                                    Pay a freelancer or contractor in stages.
+                                    Each tranche releases only after you verify
+                                    the work at that stage is done.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white border border-border rounded-2xl p-4"
+                    >
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5"
+                            >
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M3 8a5 5 0 1010 0A5 5 0 003 8z"
+                                        stroke="#dc2626"
+                                        stroke-width="1.3"
+                                    />
+                                    <path
+                                        d="M8 5.5V8l2 2"
+                                        stroke="#dc2626"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                    />
+                                </svg>
+                            </div>
+                            <div>
+                                <div
+                                    class="text-sm font-medium text-ink mb-0.5"
+                                >
+                                    Condition gate
+                                </div>
+                                <div class="text-xs text-muted">
+                                    Funds held until an external event fires —
+                                    ticket validated, crowdfund goal hit,
+                                    matched donation confirmed.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- FEATURES -->
+        <section id="features" class="py-24 bg-ink text-paper">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="max-w-xl mb-16 reveal">
+                    <p
+                        class="text-xs uppercase tracking-widest text-paper/40 mb-3"
+                    >
+                        What Cover does
+                    </p>
+                    <h2 class="serif text-4xl md:text-5xl leading-tight">
+                        Everything you need to
+                        <span class="serif-italic text-sage-light"
+                            >never lose money</span
+                        >
+                        again
+                    </h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-5">
+                    <div
+                        class="card-lift bg-white/5 border border-white/10 rounded-2xl p-6 reveal"
+                    >
+                        <div
+                            class="w-10 h-10 bg-sage rounded-xl flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <path
+                                    d="M10 2L2 6v6c0 4 3.5 7 8 8 4.5-1 8-4 8-8V6L10 2z"
+                                    fill="white"
+                                    fill-opacity="0.8"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-paper mb-2">
+                            Scam intelligence
+                        </h3>
+                        <p class="text-sm text-paper/50 leading-relaxed">
+                            AI reads Reddit, Facebook groups, Trustpilot and 6
+                            other sources daily. Flags known fraudsters before
+                            you pay them.
+                        </p>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white/5 border border-white/10 rounded-2xl p-6 reveal reveal-d1"
+                    >
+                        <div
+                            class="w-10 h-10 bg-amber rounded-xl flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <path
+                                    d="M10 3a7 7 0 100 14A7 7 0 0010 3z"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                />
+                                <path
+                                    d="M10 7v3l2.5 2.5"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-paper mb-2">
+                            Real-time risk score
+                        </h3>
+                        <p class="text-sm text-paper/50 leading-relaxed">
+                            Every seller gets a live 0–100 risk score. Clear
+                            means go. Amber means caution. Red means Cover holds
+                            your money automatically.
+                        </p>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white/5 border border-white/10 rounded-2xl p-6 reveal reveal-d2"
+                    >
+                        <div
+                            class="w-10 h-10 bg-sage-mid rounded-xl flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <path
+                                    d="M4 10l4 4 8-8"
+                                    stroke="white"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-paper mb-2">
+                            Instant restore
+                        </h3>
+                        <p class="text-sm text-paper/50 leading-relaxed">
+                            Paid the wrong amount? Wrong person? Cover's time
+                            window lets you cancel before any money moves. No
+                            forms, no waiting.
+                        </p>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white/5 border border-white/10 rounded-2xl p-6 reveal reveal-d1"
+                    >
+                        <div
+                            class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <rect
+                                    x="3"
+                                    y="6"
+                                    width="14"
+                                    height="10"
+                                    rx="2"
+                                    stroke="white"
+                                    stroke-width="1.4"
+                                />
+                                <path
+                                    d="M7 6V5a3 3 0 016 0v1"
+                                    stroke="white"
+                                    stroke-width="1.4"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-paper mb-2">
+                            Escrow with arbitration
+                        </h3>
+                        <p class="text-sm text-paper/50 leading-relaxed">
+                            Cover holds the money as a neutral third party. If
+                            something goes wrong, evidence-based arbitration
+                            decides fairly — not platform bias.
+                        </p>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white/5 border border-white/10 rounded-2xl p-6 reveal reveal-d2"
+                    >
+                        <div
+                            class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <circle
+                                    cx="10"
+                                    cy="10"
+                                    r="7"
+                                    stroke="white"
+                                    stroke-width="1.4"
+                                />
+                                <path
+                                    d="M10 7v3l2 2"
+                                    stroke="white"
+                                    stroke-width="1.4"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-paper mb-2">
+                            Trust score system
+                        </h3>
+                        <p class="text-sm text-paper/50 leading-relaxed">
+                            Both buyers and sellers build a portable trust
+                            score. High scores earn faster releases. Fraudsters
+                            can't fake history.
+                        </p>
+                    </div>
+
+                    <div
+                        class="card-lift bg-white/5 border border-white/10 rounded-2xl p-6 reveal reveal-d3"
+                    >
+                        <div
+                            class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                            >
+                                <path
+                                    d="M5 10h10M10 5v10"
+                                    stroke="white"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-paper mb-2">
+                            Works everywhere
+                        </h3>
+                        <p class="text-sm text-paper/50 leading-relaxed">
+                            WhatsApp, Facebook Marketplace, Instagram DMs,
+                            Vinted, eBay, freelance work — Cover protects any
+                            transaction, on any platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- USE CASES -->
+        <section class="py-24 max-w-6xl mx-auto px-6">
+            <div class="max-w-xl mb-16 reveal">
+                <p class="text-xs uppercase tracking-widest text-muted mb-3">
+                    Who Cover protects
+                </p>
+                <h2 class="serif text-4xl md:text-5xl text-ink leading-tight">
+                    Built for
+                    <span class="serif-italic text-sage"
+                        >real transactions</span
+                    >
+                    between real people
+                </h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div
+                    class="card-lift bg-paper border border-border rounded-2xl p-5 reveal"
+                >
+                    <div class="text-3xl mb-3">📦</div>
+                    <h3 class="font-medium text-ink mb-1.5 text-sm">
+                        Marketplace buyers
+                    </h3>
+                    <p class="text-xs text-muted leading-relaxed">
+                        Buying secondhand goods, electronics, or clothing from
+                        strangers? Cover holds your payment until the item
+                        arrives as described.
+                    </p>
+                </div>
+                <div
+                    class="card-lift bg-paper border border-border rounded-2xl p-5 reveal reveal-d1"
+                >
+                    <div class="text-3xl mb-3">🛍️</div>
+                    <h3 class="font-medium text-ink mb-1.5 text-sm">
+                        WhatsApp sellers
+                    </h3>
+                    <p class="text-xs text-muted leading-relaxed">
+                        Build buyer trust instantly. A Cover-protected link
+                        tells every buyer you're legit — and protects you from
+                        false non-delivery claims.
+                    </p>
+                </div>
+                <div
+                    class="card-lift bg-paper border border-border rounded-2xl p-5 reveal reveal-d2"
+                >
+                    <div class="text-3xl mb-3">💻</div>
+                    <h3 class="font-medium text-ink mb-1.5 text-sm">
+                        Freelancers
+                    </h3>
+                    <p class="text-xs text-muted leading-relaxed">
+                        Get paid in milestones. Client pays Cover upfront — you
+                        get paid as you deliver each stage. No more chasing
+                        invoices.
+                    </p>
+                </div>
+                <div
+                    class="card-lift bg-paper border border-border rounded-2xl p-5 reveal reveal-d3"
+                >
+                    <div class="text-3xl mb-3">💝</div>
+                    <h3 class="font-medium text-ink mb-1.5 text-sm">Donors</h3>
+                    <p class="text-xs text-muted leading-relaxed">
+                        Donate with a 24-hour reversal window. Wrong amount or
+                        duplicate? Cover gives you time to fix it before funds
+                        clear.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- COMPETITORS -->
+        <section id="competitors" class="py-24 bg-sage text-paper">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="max-w-xl mb-16 reveal">
+                    <p
+                        class="text-xs uppercase tracking-widest text-paper/40 mb-3"
+                    >
+                        Why Cover wins
+                    </p>
+                    <h2 class="serif text-4xl md:text-5xl leading-tight">
+                        What others <span class="serif-italic">miss</span>
+                    </h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="space-y-4 reveal">
+                        <div
+                            class="bg-white/10 border border-white/10 rounded-2xl p-5"
+                        >
+                            <div
+                                class="flex items-start justify-between gap-4 mb-3"
+                            >
+                                <div>
+                                    <div
+                                        class="font-medium text-paper text-sm mb-0.5 strike"
+                                    >
+                                        PayPal Buyer Protection
+                                    </div>
+                                    <div class="text-xs text-paper/40">
+                                        Reactive — kicks in after you lose money
+                                    </div>
+                                </div>
+                                <span
+                                    class="text-xs bg-red-500/20 text-red-300 px-2.5 py-1 rounded-full flex-shrink-0"
+                                    >Reactive</span
+                                >
+                            </div>
+                            <p class="text-xs text-paper/50 leading-relaxed">
+                                Waits for things to go wrong. Notoriously
+                                buyer-biased. Sellers often lose legitimate
+                                disputes. No time-window holds, no scam
+                                intelligence.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white/10 border border-white/10 rounded-2xl p-5"
+                        >
+                            <div
+                                class="flex items-start justify-between gap-4 mb-3"
+                            >
+                                <div>
+                                    <div
+                                        class="font-medium text-paper text-sm mb-0.5 strike"
+                                    >
+                                        Escrow.com
+                                    </div>
+                                    <div class="text-xs text-paper/40">
+                                        Built for $10,000+ deals only
+                                    </div>
+                                </div>
+                                <span
+                                    class="text-xs bg-amber/30 text-amber-200 px-2.5 py-1 rounded-full flex-shrink-0"
+                                    >Too expensive</span
+                                >
+                            </div>
+                            <p class="text-xs text-paper/50 leading-relaxed">
+                                Minimum fees make it uneconomical under £500. No
+                                consumer UX, no developer API worth using, feels
+                                like 2008. Unfit for WhatsApp or social
+                                commerce.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white/10 border border-white/10 rounded-2xl p-5"
+                        >
+                            <div
+                                class="flex items-start justify-between gap-4 mb-3"
+                            >
+                                <div>
+                                    <div
+                                        class="font-medium text-paper text-sm mb-0.5 strike"
+                                    >
+                                        Platform guarantees (eBay/Amazon)
+                                    </div>
+                                    <div class="text-xs text-paper/40">
+                                        Works only inside their walls
+                                    </div>
+                                </div>
+                                <span
+                                    class="text-xs bg-white/10 text-paper/50 px-2.5 py-1 rounded-full flex-shrink-0"
+                                    >Locked in</span
+                                >
+                            </div>
+                            <p class="text-xs text-paper/50 leading-relaxed">
+                                The second you trade outside their platform —
+                                WhatsApp, direct bank transfer, Instagram — you
+                                have zero protection. Cover works everywhere
+                                they don't.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="reveal reveal-d2">
+                        <div
+                            class="bg-paper/10 border border-paper/20 rounded-2xl p-6"
+                        >
+                            <div
+                                class="text-xs uppercase tracking-widest text-paper/40 mb-4"
+                            >
+                                Cover's unique advantages
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="w-5 h-5 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 mt-0.5"
+                                    >
+                                        <svg
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M2 5l2 2 4-4"
+                                                stroke="white"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-sm font-medium text-paper mb-0.5"
+                                        >
+                                            Only platform with scam intelligence
+                                        </div>
+                                        <div class="text-xs text-paper/50">
+                                            Live AI database from Reddit,
+                                            Trustpilot, Facebook, and government
+                                            fraud registries
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="w-5 h-5 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 mt-0.5"
+                                    >
+                                        <svg
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M2 5l2 2 4-4"
+                                                stroke="white"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-sm font-medium text-paper mb-0.5"
+                                        >
+                                            Time-window holds — nobody else has
+                                            this
+                                        </div>
+                                        <div class="text-xs text-paper/50">
+                                            The only platform with a
+                                            configurable "pause before it
+                                            happens" — cooling-off for any
+                                            transaction
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="w-5 h-5 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 mt-0.5"
+                                    >
+                                        <svg
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M2 5l2 2 4-4"
+                                                stroke="white"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-sm font-medium text-paper mb-0.5"
+                                        >
+                                            Works on WhatsApp from day one
+                                        </div>
+                                        <div class="text-xs text-paper/50">
+                                            No app install needed — just a link.
+                                            Send it in any chat, on any
+                                            platform, to anyone.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="w-5 h-5 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0 mt-0.5"
+                                    >
+                                        <svg
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M2 5l2 2 4-4"
+                                                stroke="white"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-sm font-medium text-paper mb-0.5"
+                                        >
+                                            Fair to both sides
+                                        </div>
+                                        <div class="text-xs text-paper/50">
+                                            Evidence-based arbitration. Not
+                                            automatically buyer-biased or
+                                            seller-biased. Trust scores reflect
+                                            real history.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- PRICING -->
+        <section id="pricing" class="py-24 max-w-6xl mx-auto px-6">
+            <div class="max-w-xl mb-16 reveal">
+                <p class="text-xs uppercase tracking-widest text-muted mb-3">
+                    Pricing
+                </p>
+                <h2 class="serif text-4xl md:text-5xl text-ink leading-tight">
+                    Simple pricing.
+                    <span class="serif-italic text-sage">Built for trust.</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-5">
+                <div
+                    class="card-lift bg-white border border-border rounded-2xl p-6 reveal"
+                >
+                    <div
+                        class="text-xs uppercase tracking-widest text-muted mb-4"
+                    >
+                        Basic
+                    </div>
+                    <div class="text-4xl serif text-ink mb-1">1%</div>
+                    <div class="text-xs text-muted mb-6">
+                        1% fee under Rs. 10,000 per transaction.
+                    </div>
+                    <div class="space-y-2.5 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Secure payment hold
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Release after
+                            confirmation
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Best for small
+                            deals
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-muted">
+                            <span class="text-border">–</span> No dispute
+                            handling
+                        </div>
+                    </div>
+                    <a
+                        href="https://wa.me/your-number?text=Hi%2C%20I%20want%20to%20start%20a%20Basic%20protected%20transaction"
+                        target="_blank"
+                        class="block text-center border border-border text-sm font-medium py-2.5 rounded-full hover:bg-paper transition-colors"
+                        >Start transaction</a
+                    >
+                </div>
+
+                <div
+                    class="card-lift bg-ink text-paper rounded-2xl p-6 reveal reveal-d1 relative overflow-hidden"
+                >
+                    <div
+                        class="absolute top-4 right-4 text-xs bg-sage text-white px-2.5 py-1 rounded-full"
+                    >
+                        Most popular
+                    </div>
+                    <div
+                        class="text-xs uppercase tracking-widest text-paper/40 mb-4"
+                    >
+                        Assisted
+                    </div>
+                    <div class="flex items-baseline gap-1 mb-1">
+                        <span class="text-4xl serif">2%</span>
+                    </div>
+                    <div class="text-xs text-paper/40 mb-6">
+                        2% fee under Rs. 50,000 per transaction.
+                    </div>
+                    <div class="space-y-2.5 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-paper">
+                            <span class="text-[#25D366]">✓</span> Everything in
+                            Basic
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-paper">
+                            <span class="text-[#25D366]">✓</span> Dispute
+                            mediation
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-paper">
+                            <span class="text-[#25D366]">✓</span> Manual
+                            verification
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-paper">
+                            <span class="text-[#25D366]">✓</span> Safer for new
+                            users
+                        </div>
+                    </div>
+                    <a
+                        href="https://wa.me/your-number?text=Hi%2C%20I%20want%20to%20use%20Assisted%20protection"
+                        target="_blank"
+                        class="block text-center bg-sage text-white text-sm font-medium py-2.5 rounded-full hover:bg-sage-mid transition-colors"
+                        >Use protected deal</a
+                    >
+                </div>
+
+                <div
+                    class="card-lift bg-white border border-border rounded-2xl p-6 reveal reveal-d2"
+                >
+                    <div
+                        class="text-xs uppercase tracking-widest text-muted mb-4"
+                    >
+                        High Value
+                    </div>
+                    <div class="text-4xl serif text-ink mb-1">3%</div>
+                    <div class="text-xs text-muted mb-6">
+                        3% fee under Rs. 200,000 per transaction.
+                    </div>
+                    <div class="space-y-2.5 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Everything in
+                            Assisted
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Priority handling
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Guided transactions
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-ink">
+                            <span class="text-sage">✓</span> Best for high-risk
+                            deals
+                        </div>
+                    </div>
+                    <a
+                        href="https://wa.me/your-number?text=Hi%2C%20I%20want%20to%20start%20a%20High%20Value%20protected%20deal"
+                        target="_blank"
+                        class="block text-center border border-border text-sm font-medium py-2.5 rounded-full hover:bg-paper transition-colors"
+                        >Start secure deal</a
+                    >
+                </div>
+            </div>
+
+            <p class="text-center text-xs text-muted mt-6 reveal">
+                Transparent pricing · Based on transaction value · No hidden
+                fees
+            </p>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- FAQ -->
+        <section id="faq" class="py-24 max-w-6xl mx-auto px-6">
+            <div class="max-w-xl mb-16 reveal">
+                <p class="text-xs uppercase tracking-widest text-muted mb-3">
+                    FAQ
+                </p>
+                <h2 class="serif text-4xl md:text-5xl text-ink leading-tight">
+                    Questions people
+                    <span class="serif-italic text-sage">always ask</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 items-start">
+                <div class="space-y-3">
+                    <details class="faq-item reveal">
+                        <summary>
+                            Does the seller have to be registered on Cover?
+                        </summary>
+                        <div class="faq-body">
+                            No. The buyer creates the Cover-protected payment
+                            link and sends it to the seller on WhatsApp or any
+                            chat. The seller simply receives the payment through
+                            the link — no signup required from their side. This
+                            is exactly why Cover works from day one with
+                            strangers.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d1">
+                        <summary>
+                            What if the seller refuses to use Cover?
+                        </summary>
+                        <div class="faq-body">
+                            A legitimate seller has no reason to refuse — Cover
+                            protects them too against false non-delivery claims.
+                            If a seller refuses Cover specifically, that is
+                            itself a serious red flag worth taking seriously
+                            before you pay them anything. Honest sellers welcome
+                            the trust signal Cover provides.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d1">
+                        <summary>
+                            How does Cover hold my money — where does it go?
+                        </summary>
+                        <div class="faq-body">
+                            Your payment goes into a dedicated Cover hold
+                            account — separate from Cover's operating funds. It
+                            is not invested, not lent, and not used for anything
+                            else. It sits there until you confirm delivery,
+                            raise a dispute, or the hold window expires. You can
+                            track its status in real time.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d2">
+                        <summary>
+                            What happens if the seller sends a fake tracking
+                            number?
+                        </summary>
+                        <div class="faq-body">
+                            Cover verifies tracking numbers directly against
+                            courier APIs — not by trusting what the seller tells
+                            us. A fake tracking number will fail verification
+                            immediately. If a seller cannot provide a valid,
+                            courier-confirmed tracking reference within the
+                            agreed window, Cover automatically returns your
+                            money.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d2">
+                        <summary>
+                            Can I use Cover for digital products or services?
+                        </summary>
+                        <div class="faq-body">
+                            Yes — Cover uses milestone gates for digital work. A
+                            freelancer's payment is split into stages. Each
+                            stage releases only after you review and sign off
+                            the deliverable. For one-off digital purchases,
+                            Cover holds payment until you confirm you have
+                            received and can access the item.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d3">
+                        <summary>Is Cover free to use?</summary>
+                        <div class="faq-body">
+                            Cover charges a small percentage fee per protected
+                            transaction — 1% for basic deals under Rs. 10,000,
+                            2% for assisted deals up to Rs. 50,000, and 3% for
+                            high-value deals up to Rs. 200,000. No monthly
+                            subscription, no hidden charges. You only pay when a
+                            transaction is protected.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="space-y-3">
+                    <details class="faq-item reveal reveal-d1">
+                        <summary>
+                            What happens if I receive a damaged or wrong item?
+                        </summary>
+                        <div class="faq-body">
+                            Do not confirm delivery — open a dispute instead.
+                            Upload photos of what arrived. The seller has 48
+                            hours to respond with their own evidence. Cover's
+                            system weighs both sides and issues a verdict: full
+                            refund, partial refund, or return-then-refund.
+                            Neither side can win without evidence.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d1">
+                        <summary>
+                            How does Cover's scam intelligence work?
+                        </summary>
+                        <div class="faq-body">
+                            Our AI continuously scans Reddit, Facebook groups,
+                            Trustpilot, government fraud registries, and our own
+                            user reports. Every seller gets a live risk score
+                            before you pay. You see the evidence — not just a
+                            number — so you can make your own informed decision.
+                            We inform, we never accuse without proof.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d2">
+                        <summary>How long does Cover hold the money?</summary>
+                        <div class="faq-body">
+                            It depends on the hold type you choose. Time windows
+                            range from 90 seconds to 7 days. Delivery gates
+                            release automatically when the courier confirms
+                            delivery. Milestone gates release stage by stage.
+                            You always see a clear countdown and status on the
+                            Cover payment page.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d2">
+                        <summary>
+                            Can a seller have their score reviewed if they think
+                            it's wrong?
+                        </summary>
+                        <div class="faq-body">
+                            Yes — every seller can submit a counter-claim with
+                            supporting evidence if they believe their risk score
+                            is inaccurate. Cover reviews within 72 hours. False
+                            positives hurt our credibility as much as false
+                            negatives, so we take appeals seriously and correct
+                            scores when evidence supports it.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d3">
+                        <summary>
+                            Does Cover work for business purchases too?
+                        </summary>
+                        <div class="faq-body">
+                            Yes. Cover's Business plan adds approval chains —
+                            any purchase above a set threshold requires a
+                            manager to approve before the money moves. This
+                            prevents unauthorised spending, ad campaign errors,
+                            and supplier fraud. Contact us on WhatsApp to
+                            discuss your team's setup.
+                        </div>
+                    </details>
+
+                    <details class="faq-item reveal reveal-d3">
+                        <summary>Is my financial data safe with Cover?</summary>
+                        <div class="faq-body">
+                            Cover never stores your card details — payments are
+                            processed through licensed payment gateways. Your
+                            transaction data is encrypted and never shared with
+                            third parties or used for advertising. Cover makes
+                            money from transaction fees, not your data.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <hr class="sep" />
+
+        <!-- CTA -->
+        <section class="py-24 max-w-6xl mx-auto px-6 text-center reveal">
+            <div class="max-w-xl mx-auto">
+                <h2
+                    class="serif text-4xl md:text-5xl text-ink leading-tight mb-4"
+                >
+                    The next time you pay a stranger<br />
+                    <span class="serif-italic text-sage">use Cover.</span>
+                </h2>
+                <p class="text-muted text-sm mb-10">
+                    We're in early beta. Join on WhatsApp and be among the first
+                    to transact safely.
+                </p>
+                <a
+                    href="https://chat.whatsapp.com/FyVV2yoKzwP6uDaTht5zoh"
+                    target="_blank"
+                    class="wa-btn inline-flex items-center gap-2.5 bg-[#25D366] text-white font-medium px-8 py-4 rounded-full hover:bg-[#20ba58] transition-colors text-sm"
+                >
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                        />
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.528 5.847L.057 23.882l6.198-1.456A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.68.865.928-3.585-.234-.37A9.818 9.818 0 012.182 12c0-5.423 4.395-9.818 9.818-9.818S21.818 6.577 21.818 12 17.423 21.818 12 21.818z"
+                        />
+                    </svg>
+                    Join Cover on WhatsApp
+                </a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-border py-10">
+            <div
+                class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+            >
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-7 h-7 bg-sage rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden"
+                    >
+                        <img
+                            src="logo.png"
+                            alt="icon"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <span class="text-sm font-medium text-ink">Cover</span>
+                    <span class="text-xs text-muted"
+                        >· Pay safe. Every time.</span
+                    >
+                </div>
+                <div class="text-xs text-muted">
+                    © 2025 Cover · Currently in private beta
                 </div>
             </div>
         </footer>
