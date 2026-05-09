@@ -2216,125 +2216,82 @@
                                         <span>₹100</span><span>₹2,00,000</span>
                                     </div>
                                 </div>
-                                <!-- Results -->
+
+                                <!-- Results Breakdown -->
                                 <div
-                                    class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 space-y-5"
+                                    class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 space-y-4"
                                 >
-                                    <div
-                                        class="flex justify-between items-center"
-                                    >
-                                        <span class="text-neutral-400"
-                                            >Cover Fee</span
-                                        ><span
-                                            id="feeDisplay"
-                                            class="text-2xl font-bold text-green-400"
-                                            >₹1,225</span
+                                    <div class="space-y-3 text-sm">
+                                        <div
+                                            class="flex justify-between items-center"
                                         >
+                                            <span class="text-neutral-400"
+                                                >Product Amount</span
+                                            ><span
+                                                id="productBreakdown"
+                                                class="font-medium"
+                                                >₹24,500</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center"
+                                        >
+                                            <span class="text-neutral-400"
+                                                >Delivery Charges</span
+                                            ><span
+                                                id="deliveryBreakdown"
+                                                class="font-medium"
+                                                >₹0</span
+                                            >
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center"
+                                        >
+                                            <span class="text-neutral-400"
+                                                >Cover Fee (5%)</span
+                                            ><span
+                                                id="feeDisplay"
+                                                class="font-medium text-green-400"
+                                                >₹1,225</span
+                                            >
+                                        </div>
                                     </div>
                                     <div
-                                        class="h-2 bg-white/10 rounded-full overflow-hidden"
+                                        class="border-t border-white/10 pt-4 space-y-4"
                                     >
                                         <div
-                                            id="feeBar"
-                                            class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-300"
-                                            style="width: 5%"
-                                        ></div>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-4 text-sm">
-                                        <div>
-                                            <div
-                                                class="text-neutral-400 text-xs"
-                                            >
-                                                Seller Receives
-                                            </div>
-                                            <div
-                                                id="sellerDisplay"
-                                                class="font-medium text-white"
-                                            >
-                                                ₹24,500
-                                            </div>
-                                        </div>
-                                        <div class="text-right">
-                                            <div
-                                                class="text-neutral-400 text-xs"
-                                            >
-                                                Buyer Pays
-                                            </div>
-                                            <div
+                                            class="flex justify-between items-center"
+                                        >
+                                            <span
+                                                class="text-white font-semibold"
+                                                >Buyer Pays</span
+                                            ><span
                                                 id="totalDisplay"
-                                                class="font-medium"
+                                                class="text-xl font-bold text-white"
+                                                >₹25,725</span
                                             >
-                                                ₹25,725
-                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center"
+                                        >
+                                            <span
+                                                class="text-neutral-500 text-xs"
+                                                >Seller Receives</span
+                                            ><span
+                                                id="sellerDisplay"
+                                                class="font-medium text-neutral-400 text-xs"
+                                                >₹24,500</span
+                                            >
                                         </div>
                                     </div>
                                 </div>
+
                                 <div
                                     id="minBadge"
                                     class="min-fee-badge visible text-amber-400 text-xs"
                                     style="display: none"
                                 >
                                     <span>Minimum fee of ₹100 applied</span>
-                                </div>
-                                <div
-                                    id="rateDisplay"
-                                    class="text-center text-xs text-neutral-400"
-                                >
-                                    Effective rate: 5.0%
-                                </div>
-                            </div>
-                            <!-- Examples -->
-                            <div class="px-6 pb-6">
-                                <p
-                                    class="text-[10px] uppercase tracking-widest text-neutral-500 mb-3"
-                                >
-                                    Quick Examples
-                                </p>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <button
-                                        onclick="setAmount(1000, 0)"
-                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
-                                    >
-                                        <div class="text-neutral-300">
-                                            Services
-                                        </div>
-                                        <div class="font-bold text-white">
-                                            ₹1,000
-                                        </div>
-                                    </button>
-                                    <button
-                                        onclick="setAmount(5000, 150)"
-                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
-                                    >
-                                        <div class="text-neutral-300">
-                                            Gadgets
-                                        </div>
-                                        <div class="font-bold text-white">
-                                            ₹5,000
-                                        </div>
-                                    </button>
-                                    <button
-                                        onclick="setAmount(24500, 250)"
-                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
-                                    >
-                                        <div class="text-neutral-300">
-                                            Smartphone
-                                        </div>
-                                        <div class="font-bold text-white">
-                                            ₹24,500
-                                        </div>
-                                    </button>
-                                    <button
-                                        onclick="setAmount(100000, 500)"
-                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
-                                    >
-                                        <div class="text-neutral-300">
-                                            Laptop
-                                        </div>
-                                        <div class="font-bold text-white">
-                                            ₹1,00,000
-                                        </div>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -2906,7 +2863,6 @@
                 </div>
             </div>
         </div>
-
         <div class="policy-overlay" data-policy="returns">
             <label for="policy-returns" class="policy-backdrop"></label>
             <div class="policy-modal-panel">
@@ -3047,7 +3003,6 @@
                 </div>
             </div>
         </div>
-
         <div class="policy-overlay" data-policy="terms">
             <label for="policy-terms" class="policy-backdrop"></label>
             <div class="policy-modal-panel">
@@ -3212,49 +3167,32 @@
                     parseInt(deliveryInput.value) || 0,
                 );
 
-                // Total base is Product + Delivery
                 const totalBase = productAmount + deliveryAmount;
-
-                // Fee is 5% of totalBase, minimum 100
                 const fee = Math.max(100, totalBase * 0.05);
-
-                // Seller receives the full totalBase
                 const seller = totalBase;
-
-                // Buyer pays totalBase + fee
                 const buyerPays = totalBase + fee;
-
-                const rate =
-                    totalBase > 0
-                        ? ((fee / totalBase) * 100).toFixed(1)
-                        : "0.0";
 
                 document.getElementById("amountDisplay").textContent =
                     "₹" + productAmount.toLocaleString("en-IN");
                 document.getElementById("deliveryDisplay").textContent =
                     "₹" + deliveryAmount.toLocaleString("en-IN");
+                document.getElementById("productBreakdown").textContent =
+                    "₹" + productAmount.toLocaleString("en-IN");
+                document.getElementById("deliveryBreakdown").textContent =
+                    "₹" + deliveryAmount.toLocaleString("en-IN");
                 document.getElementById("feeDisplay").textContent =
                     "₹" + fee.toLocaleString("en-IN");
-                document.getElementById("feeBar").style.width =
-                    Math.min(parseFloat(rate), 100) + "%";
                 document.getElementById("sellerDisplay").textContent =
                     "₹" + seller.toLocaleString("en-IN");
                 document.getElementById("totalDisplay").textContent =
                     "₹" + buyerPays.toLocaleString("en-IN");
-                document.getElementById("rateDisplay").textContent =
-                    "Effective rate: " + rate + "%";
+
                 document.getElementById("minBadge").style.display =
                     totalBase <= 2000 ? "flex" : "none";
 
                 productInput.value = productAmount;
                 deliveryInput.value = deliveryAmount;
                 rangeInput.value = productAmount;
-            }
-
-            function setAmount(productVal, deliveryVal = 0) {
-                productInput.value = productVal;
-                deliveryInput.value = deliveryVal;
-                calculate();
             }
 
             productInput.addEventListener("input", calculate);
