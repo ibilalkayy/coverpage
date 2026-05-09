@@ -685,6 +685,91 @@
             .step-line-inactive {
                 background: #e5e5e5;
             }
+
+            /* CSS-Only Calculator Logic */
+            .calc-radio {
+                display: none;
+            }
+
+            /* Dynamic Content Injectors */
+            .d-amt::after {
+                content: var(--amt);
+            }
+            .d-fee::after {
+                content: var(--fee);
+            }
+            .d-txn::after {
+                content: var(--txn);
+            }
+            .d-seller::after {
+                content: var(--seller);
+            }
+            .d-total::after {
+                content: var(--total);
+            }
+            .d-rate::after {
+                content: var(--rate);
+            }
+            .d-bar {
+                width: var(--bar) !important;
+            }
+            .d-min {
+                display: var(--min-disp);
+            }
+
+            /* State 1: ₹1,000 (Minimum ₹100 fee applies) */
+            #c1:checked ~ div {
+                --amt: "₹1,000";
+                --fee: "₹100";
+                --txn: "₹1,000";
+                --seller: "₹900";
+                --total: "₹1,100";
+                --rate: "10.0%";
+                --bar: 10%;
+                --min-disp: flex;
+            }
+            /* State 2: ₹5,000 */
+            #c2:checked ~ div {
+                --amt: "₹5,000";
+                --fee: "₹250";
+                --txn: "₹5,000";
+                --seller: "₹4,750";
+                --total: "₹5,250";
+                --rate: "5.0%";
+                --bar: 5%;
+                --min-disp: none;
+            }
+            /* State 3: ₹24,500 */
+            #c3:checked ~ div {
+                --amt: "₹24,500";
+                --fee: "₹1,225";
+                --txn: "₹24,500";
+                --seller: "₹23,275";
+                --total: "₹25,725";
+                --rate: "5.0%";
+                --bar: 5%;
+                --min-disp: none;
+            }
+            /* State 4: ₹1,00,000 */
+            #c4:checked ~ div {
+                --amt: "₹1,00,000";
+                --fee: "₹5,000";
+                --txn: "₹1,00,000";
+                --seller: "₹95,000";
+                --total: "₹1,05,000";
+                --rate: "5.0%";
+                --bar: 5%;
+                --min-disp: none;
+            }
+
+            /* Active label styling */
+            #c1:checked ~ div label[for="c1"],
+            #c2:checked ~ div label[for="c2"],
+            #c3:checked ~ div label[for="c3"],
+            #c4:checked ~ div label[for="c4"] {
+                background: rgba(34, 197, 94, 0.1) !important;
+                border-color: rgba(34, 197, 94, 0.5) !important;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -2068,321 +2153,423 @@
 
         <hr class="sep" />
 
-        <!-- PRICING -->
+        <!-- PRICING — Calculator -->
         <section
             id="pricing"
-            class="py-24 sm:py-28 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10"
+            class="py-24 sm:py-28 bg-[#0A0A0A] text-white overflow-hidden"
         >
-            <div class="max-w-lg mb-16 reveal">
-                <p
-                    class="text-[11px] uppercase tracking-[0.12em] text-neutral-400 mb-3 font-medium"
-                >
-                    Pricing
-                </p>
-                <h2
-                    class="text-[clamp(1.75rem,4vw,2.75rem)] text-black leading-[1.15] tracking-[-0.02em] font-extrabold"
-                >
-                    Simple. <span class="text-gradient">Built for trust.</span>
-                </h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-5">
-                <div class="card p-6 reveal">
-                    <div
-                        class="text-[11px] uppercase tracking-[0.1em] text-neutral-400 mb-5 font-medium"
-                    >
-                        Basic
-                    </div>
-                    <div
-                        class="text-[36px] font-extrabold text-black tracking-tight leading-none mb-1"
-                    >
-                        2%
-                    </div>
-                    <div class="text-[13px] text-neutral-400 mb-7">
-                        Under ₹10,000 per transaction. Min. ₹100
-                    </div>
-                    <div class="space-y-3 mb-7">
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Secure payment hold
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Release after confirmation
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Best for small deals
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-300"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8h8"
-                                    stroke="#D4D4D4"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                /></svg
-                            >No dispute handling
-                        </div>
-                    </div>
-                    <a
-                        href="https://forms.gle/ugHFWiyPXx7mHuLfA"
-                        target="_blank"
-                        class="block text-center btn-secondary text-[13px] font-medium py-3 rounded-full"
-                        >Start transaction</a
-                    >
-                </div>
+            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
                 <div
-                    class="card bg-[#0A0A0A] text-white p-6 relative pricing-glow reveal rd1"
+                    class="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center"
                 >
+                    <!-- LEFT -->
+                    <div class="max-w-[560px]">
+                        <p
+                            class="text-[11px] uppercase tracking-[0.12em] text-neutral-500 mb-3 font-medium"
+                        >
+                            Pricing
+                        </p>
+                        <h2
+                            class="text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.15] tracking-[-0.02em] font-extrabold mb-6"
+                        >
+                            One fee.
+                            <span class="text-neutral-500"
+                                >Total peace of mind.</span
+                            >
+                        </h2>
+                        <p
+                            class="text-[15px] text-neutral-500 leading-[1.75] mb-10"
+                        >
+                            Just 5% of your transaction amount — with a minimum
+                            of ₹100. That's it. No tiers, no hidden charges.
+                        </p>
+
+                        <div
+                            class="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 mb-8"
+                        >
+                            <div class="flex items-center gap-4 mb-5">
+                                <div
+                                    class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0"
+                                >
+                                    <svg
+                                        width="22"
+                                        height="22"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7L12 2z"
+                                            stroke="white"
+                                            stroke-width="1.5"
+                                        />
+                                        <path
+                                            d="M9 12l2 2 4-4"
+                                            stroke="white"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div
+                                        class="text-[20px] font-extrabold tracking-tight leading-none"
+                                    >
+                                        5%
+                                    </div>
+                                    <div
+                                        class="text-[12px] text-neutral-500 mt-0.5"
+                                    >
+                                        Minimum ₹100 per transaction
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-3 text-[13px] text-neutral-300">
+                                <div class="flex items-center gap-2.5">
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 16 16"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M4 8l2.5 2.5L13 3"
+                                            stroke="#22C55E"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    >Secure payment hold
+                                </div>
+                                <div class="flex items-center gap-2.5">
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 16 16"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M4 8l2.5 2.5L13 3"
+                                            stroke="#22C55E"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    >Release after confirmation
+                                </div>
+                                <div class="flex items-center gap-2.5">
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 16 16"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M4 8l2.5 2.5L13 3"
+                                            stroke="#22C55E"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    >Manual dispute mediation
+                                </div>
+                                <div class="flex items-center gap-2.5">
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 16 16"
+                                        fill="none"
+                                    >
+                                        <path
+                                            d="M4 8l2.5 2.5L13 3"
+                                            stroke="#22C55E"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        /></svg
+                                    >Seller verification
+                                </div>
+                            </div>
+                        </div>
+
+                        <a
+                            href="https://forms.gle/ugHFWiyPXx7mHuLfA"
+                            target="_blank"
+                            class="inline-flex items-center gap-2 btn-green font-medium px-7 py-3.5 rounded-full text-[14px]"
+                        >
+                            Start Protected Deal
+                            <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                            >
+                                <path
+                                    d="M3 8h10M9 4l4 4-4 4"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- RIGHT — Calculator -->
                     <div
-                        class="absolute top-5 right-5 text-[10px] font-semibold bg-green-600 text-white px-3 py-[4px] rounded-full uppercase tracking-wider"
+                        class="pricing-visual flex justify-center lg:justify-end"
                     >
-                        Popular
-                    </div>
-                    <div
-                        class="text-[11px] uppercase tracking-[0.1em] text-neutral-500 mb-5 font-medium"
-                    >
-                        Assisted
-                    </div>
-                    <div
-                        class="text-[36px] font-extrabold tracking-tight leading-none mb-1"
-                    >
-                        3%
-                    </div>
-                    <div class="text-[13px] text-neutral-500 mb-7">
-                        Under ₹50,000 per transaction
-                    </div>
-                    <div class="space-y-3 mb-7">
                         <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-200"
+                            class="w-full max-w-[440px] bg-[#141414] rounded-2xl border border-white/[0.06] overflow-hidden shadow-2xl"
                         >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
+                            <div
+                                class="px-6 pt-6 pb-5 border-b border-white/[0.06]"
                             >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#22C55E"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Everything in Basic
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-200"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#22C55E"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Manual dispute mediation
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-200"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#22C55E"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Seller verification
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-200"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#22C55E"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Safer for new users
+                                <div class="flex items-center gap-2.5 mb-1">
+                                    <div
+                                        class="w-7 h-7 bg-white rounded-lg flex items-center justify-center overflow-hidden"
+                                    >
+                                        <img
+                                            src="logo.png"
+                                            alt="Cover"
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <span
+                                        class="text-[13px] font-semibold tracking-tight text-white"
+                                        >Fee Calculator</span
+                                    >
+                                </div>
+                                <p
+                                    class="text-[12px] text-neutral-500 ml-[38px]"
+                                >
+                                    See exactly what you'll pay
+                                </p>
+                            </div>
+
+                            <div class="p-6 space-y-6">
+                                <!-- Amount Input -->
+                                <div>
+                                    <div class="flex justify-between mb-2">
+                                        <label
+                                            class="text-[10px] uppercase tracking-[0.1em] text-neutral-500 font-medium"
+                                            >Transaction Amount</label
+                                        >
+                                        <span
+                                            id="amountDisplay"
+                                            class="text-sm font-semibold text-white"
+                                            >₹24,500</span
+                                        >
+                                    </div>
+                                    <div class="relative">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 text-xl font-semibold"
+                                            >₹</span
+                                        >
+                                        <input
+                                            type="number"
+                                            id="amountInput"
+                                            value="24500"
+                                            min="100"
+                                            step="100"
+                                            class="calc-input w-full pl-10 text-2xl font-bold bg-transparent border border-white/10 focus:border-green-500 rounded-2xl py-4 transition-all"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Range Slider -->
+                                <div>
+                                    <input
+                                        type="range"
+                                        id="amountRange"
+                                        min="100"
+                                        max="200000"
+                                        step="100"
+                                        value="24500"
+                                        class="w-full accent-green-500"
+                                    />
+                                    <div
+                                        class="flex justify-between text-[10px] text-neutral-500 mt-1"
+                                    >
+                                        <span>₹100</span>
+                                        <span>₹2,00,000</span>
+                                    </div>
+                                </div>
+
+                                <!-- Results -->
+                                <div
+                                    class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-5 space-y-5"
+                                >
+                                    <!-- Fee -->
+                                    <div
+                                        class="flex justify-between items-center"
+                                    >
+                                        <span class="text-neutral-400"
+                                            >Cover Fee</span
+                                        >
+                                        <span
+                                            id="feeDisplay"
+                                            class="text-2xl font-bold text-green-400"
+                                            >₹1,225</span
+                                        >
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    <div
+                                        class="h-2 bg-white/10 rounded-full overflow-hidden"
+                                    >
+                                        <div
+                                            id="feeBar"
+                                            class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-300"
+                                            style="width: 5%"
+                                        ></div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <div
+                                                class="text-neutral-400 text-xs"
+                                            >
+                                                Seller Receives
+                                            </div>
+                                            <div
+                                                id="sellerDisplay"
+                                                class="font-medium text-white"
+                                            >
+                                                ₹24,500
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div
+                                                class="text-neutral-400 text-xs"
+                                            >
+                                                Buyer Pays
+                                            </div>
+                                            <div
+                                                id="totalDisplay"
+                                                class="font-medium"
+                                            >
+                                                ₹25,725
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Min fee badge -->
+                                <div
+                                    id="minBadge"
+                                    class="min-fee-badge visible text-amber-400 text-xs"
+                                    style="display: none"
+                                >
+                                    <span>Minimum fee of ₹100 applied</span>
+                                </div>
+
+                                <!-- Effective rate -->
+                                <div
+                                    id="rateDisplay"
+                                    class="text-center text-xs text-neutral-400"
+                                >
+                                    Effective rate: 5.0%
+                                </div>
+                            </div>
+
+                            <!-- Examples -->
+                            <div class="px-6 pb-6">
+                                <p
+                                    class="text-[10px] uppercase tracking-widest text-neutral-500 mb-3"
+                                >
+                                    Quick Examples
+                                </p>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button
+                                        onclick="setAmount(1000)"
+                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
+                                    >
+                                        <div class="text-neutral-300">
+                                            Small
+                                        </div>
+                                        <div class="font-bold text-white">
+                                            ₹1,000
+                                        </div>
+                                    </button>
+                                    <button
+                                        onclick="setAmount(5000)"
+                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
+                                    >
+                                        <div class="text-neutral-300">
+                                            Medium
+                                        </div>
+                                        <div class="font-bold text-white">
+                                            ₹5,000
+                                        </div>
+                                    </button>
+                                    <button
+                                        onclick="setAmount(24500)"
+                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
+                                    >
+                                        <div class="text-neutral-300">
+                                            Phone
+                                        </div>
+                                        <div class="font-bold text-white">
+                                            ₹24,500
+                                        </div>
+                                    </button>
+                                    <button
+                                        onclick="setAmount(100000)"
+                                        class="example-card text-left p-3 rounded-xl text-sm border border-white/[0.06] bg-white/[0.02] transition-all hover:bg-white/[0.04]"
+                                    >
+                                        <div class="text-neutral-300">Big</div>
+                                        <div class="font-bold text-white">
+                                            ₹1,00,000
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <a
-                        href="https://forms.gle/ugHFWiyPXx7mHuLfA"
-                        target="_blank"
-                        class="block text-center btn-green text-[13px] font-medium py-3 rounded-full"
-                        >Use protected deal</a
-                    >
-                </div>
-                <div class="card p-6 reveal rd2">
-                    <div
-                        class="text-[11px] uppercase tracking-[0.1em] text-neutral-400 mb-5 font-medium"
-                    >
-                        High Value
-                    </div>
-                    <div
-                        class="text-[36px] font-extrabold text-black tracking-tight leading-none mb-1"
-                    >
-                        4%
-                    </div>
-                    <div class="text-[13px] text-neutral-400 mb-7">
-                        Under ₹100,000 per transaction
-                    </div>
-                    <div class="space-y-3 mb-7">
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Everything in Assisted
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Priority handling
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Guided throughout
-                        </div>
-                        <div
-                            class="flex items-center gap-2.5 text-[13px] text-neutral-700"
-                        >
-                            <svg
-                                width="15"
-                                height="15"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4 8l2.5 2.5L13 3"
-                                    stroke="#16A34A"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                /></svg
-                            >Best for high-risk deals
-                        </div>
-                    </div>
-                    <a
-                        href="https://forms.gle/ugHFWiyPXx7mHuLfA"
-                        target="_blank"
-                        class="block text-center btn-secondary text-[13px] font-medium py-3 rounded-full"
-                        >Start secure deal</a
-                    >
                 </div>
             </div>
-            <p class="text-center text-[12px] text-neutral-400 mt-8 reveal">
-                Transparent pricing · Based on transaction value · No hidden
-                fees
-            </p>
         </section>
+
+        <script>
+            const input = document.getElementById("amountInput");
+            const range = document.getElementById("amountRange");
+
+            function calculate(val) {
+                const amount = Math.max(100, parseInt(val) || 0);
+                const fee = Math.max(100, amount * 0.05);
+                const seller = amount; // Seller gets the full amount
+                const total = amount + fee; // Buyer pays the amount + 5% fee
+                const rate = ((fee / amount) * 100).toFixed(1);
+
+                document.getElementById("amountDisplay").textContent =
+                    "₹" + amount.toLocaleString("en-IN");
+                document.getElementById("feeDisplay").textContent =
+                    "₹" + fee.toLocaleString("en-IN");
+                document.getElementById("feeBar").style.width = rate + "%";
+                document.getElementById("sellerDisplay").textContent =
+                    "₹" + seller.toLocaleString("en-IN");
+                document.getElementById("totalDisplay").textContent =
+                    "₹" + total.toLocaleString("en-IN");
+                document.getElementById("rateDisplay").textContent =
+                    "Effective rate: " + rate + "%";
+                document.getElementById("minBadge").style.display =
+                    amount <= 2000 ? "flex" : "none";
+
+                input.value = amount;
+                range.value = amount;
+            }
+
+            function setAmount(val) {
+                calculate(val);
+            }
+
+            input.addEventListener("input", (e) => calculate(e.target.value));
+            range.addEventListener("input", (e) => calculate(e.target.value));
+
+            // Initialize calculator on load
+            calculate(input.value);
+        </script>
 
         <hr class="sep" />
 
