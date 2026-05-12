@@ -12,19 +12,19 @@ function calculate() {
   const buyerPays = totalBase + fee;
 
   document.getElementById("amountDisplay").textContent =
-    "₹" + productAmount.toLocaleString("en-IN");
+    "₨. " + productAmount.toLocaleString("en-IN");
   document.getElementById("deliveryDisplay").textContent =
-    "₹" + deliveryAmount.toLocaleString("en-IN");
+    "₨. " + deliveryAmount.toLocaleString("en-IN");
   document.getElementById("productBreakdown").textContent =
-    "₹" + productAmount.toLocaleString("en-IN");
+    "₨. " + productAmount.toLocaleString("en-IN");
   document.getElementById("deliveryBreakdown").textContent =
-    "₹" + deliveryAmount.toLocaleString("en-IN");
+    "₨. " + deliveryAmount.toLocaleString("en-IN");
   document.getElementById("feeDisplay").textContent =
-    "₹" + fee.toLocaleString("en-IN");
+    "₨. " + fee.toLocaleString("en-IN");
   document.getElementById("sellerDisplay").textContent =
-    "₹" + seller.toLocaleString("en-IN");
+    "₨. " + seller.toLocaleString("en-IN");
   document.getElementById("totalDisplay").textContent =
-    "₹" + buyerPays.toLocaleString("en-IN");
+    "₨. " + buyerPays.toLocaleString("en-IN");
 
   document.getElementById("minBadge").style.display =
     totalBase <= 2000 ? "flex" : "none";
