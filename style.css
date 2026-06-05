@@ -479,7 +479,7 @@ body:has(input[name="policy-toggle"]:checked) {
     opacity: 0;
 }
 .form-panel.open {
-    max-height: 800px;
+    max-height: 2400px;
     opacity: 1;
 }
 
