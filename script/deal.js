@@ -36,6 +36,15 @@ function recalc() {
     rawFee < 100 && sub > 0 ? "block" : "none";
 }
 
+// ── Silently read referral code from URL (?ref=ali123) ──
+function getReferralCode() {
+  try {
+    return new URLSearchParams(window.location.search).get("ref") || null;
+  } catch (_) {
+    return null;
+  }
+}
+
 // ── Send Transaction + Deal Details to Cover ──
 function sendToCover() {
   const name = document.getElementById("d-name").value.trim();
@@ -82,9 +91,13 @@ function sendToCover() {
     .filter((l) => l !== null)
     .join("\n");
 
+  // ── Silently append referral code if present — invisible to customer ──
+  const ref = getReferralCode();
+  const finalMsg = ref ? lines + `\n\n🔗 Referral: ${ref}` : lines;
+
   const coverPhone = "923158105028";
   window.open(
-    `https://wa.me/${coverPhone}?text=${encodeURIComponent(lines)}`,
+    `https://wa.me/${coverPhone}?text=${encodeURIComponent(finalMsg)}`,
     "_blank",
   );
 }
