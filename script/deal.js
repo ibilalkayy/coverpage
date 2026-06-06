@@ -85,7 +85,7 @@ function sendToCover() {
     `Cover Fee (5%): ${pkr(fee)}`,
     address ? `Delivery Address: ${address}` : null,
     `Seller Phone: +92${seller}`,
-    getReferralCode() ? `🔗 Referral: ${getReferralCode()}` : null,
+    getReferralCode() ? `Referral: ${getReferralCode()}` : null,
     "",
     "Sent via cover.mom",
   ]
