@@ -85,15 +85,14 @@ function sendToCover() {
     `Cover Fee (5%): ${pkr(fee)}`,
     address ? `Delivery Address: ${address}` : null,
     `Seller Phone: +92${seller}`,
+    getReferralCode() ? `🔗 Referral: ${getReferralCode()}` : null,
     "",
     "Sent via cover.mom",
   ]
     .filter((l) => l !== null)
     .join("\n");
 
-  // ── Silently append referral code if present — invisible to customer ──
-  const ref = getReferralCode();
-  const finalMsg = ref ? lines + `\n\n🔗 Referral: ${ref}` : lines;
+  const finalMsg = lines;
 
   const coverPhone = "923158105028";
   window.open(
